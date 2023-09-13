@@ -1,0 +1,29 @@
+---
+version: "3"
+services:
+  rare_fishes_db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: rare_fishes_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: pass1
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - 3309:3306
+    expose:
+      - "3309"
+  shipping_db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: shipping_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: pass1
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - 3307:3306
+    expose:
+      - "3307"
