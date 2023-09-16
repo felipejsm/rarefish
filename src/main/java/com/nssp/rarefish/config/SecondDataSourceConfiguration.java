@@ -30,7 +30,7 @@ public class SecondDataSourceConfiguration {
 			new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(secondDataSource());
 		em.setPackagesToScan(
-				new String[] {"com.nssp.rarefish.model.shipping"}
+				"com.nssp.rarefish.model.shipping"
 				);
 		HibernateJpaVendorAdapter vendorAdapter 
 			= new HibernateJpaVendorAdapter();
