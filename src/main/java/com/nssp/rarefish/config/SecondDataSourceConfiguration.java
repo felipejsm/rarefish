@@ -5,11 +5,9 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.DefaultJpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -27,7 +25,6 @@ public class SecondDataSourceConfiguration {
 	private Environment env;
 
 	@Bean
-	@Primary
 	public LocalContainerEntityManagerFactoryBean secondEntityManager() {
 		LocalContainerEntityManagerFactoryBean em = 
 			new LocalContainerEntityManagerFactoryBean();
@@ -41,12 +38,15 @@ public class SecondDataSourceConfiguration {
 		HashMap<String, Object> properties = new HashMap<>();
 		properties.put("hibernate.dialect",
 				env.getProperty("spring.jpa.properties.hibernate.dialect"));
+		properties.put("spring.jpa.generate-ddl",
+				env.getProperty("spring.jpa.generate-ddl"));
+		properties.put("hibernate.hbm2ddl.auto",
+				env.getProperty("spring.jpa.hibernate.ddl-auto"));
 				em.setJpaPropertyMap(properties);
 				return em;
 
 	}
 
-	@Primary
 	@Bean
 	public DataSource secondDataSource() {
 		DriverManagerDataSource dataSource 
@@ -59,7 +59,6 @@ public class SecondDataSourceConfiguration {
 		return dataSource;
 	}
 
-	@Primary
 	@Bean
 	public PlatformTransactionManager secondTransactionManager() {
 		JpaTransactionManager transactionManager
