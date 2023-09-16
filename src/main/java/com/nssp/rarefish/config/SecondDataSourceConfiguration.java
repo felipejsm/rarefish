@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.DefaultJpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -38,7 +39,7 @@ public class SecondDataSourceConfiguration {
 			= new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		HashMap<String, Object> properties = new HashMap<>();
-		properties.put("spring.jpa.properties.hibernate.dialect",
+		properties.put("hibernate.dialect",
 				env.getProperty("spring.jpa.properties.hibernate.dialect"));
 				em.setJpaPropertyMap(properties);
 				return em;

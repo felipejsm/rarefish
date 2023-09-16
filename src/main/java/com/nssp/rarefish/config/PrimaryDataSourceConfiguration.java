@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.jpa.DefaultJpaDialect;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -32,13 +34,12 @@ public class PrimaryDataSourceConfiguration {
 			new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(primaryDataSource());
 		em.setPackagesToScan(
-				new String[] {"com.nssp.rarefish.model.fish"}
-				);
+				"com.nssp.rarefish.model.fish");
 		HibernateJpaVendorAdapter vendorAdapter 
 			= new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		HashMap<String, Object> properties = new HashMap<>();
-		properties.put("spring.jpa.properties.hibernate.dialect",
+		properties.put("hibernate.dialect",
 				env.getProperty("spring.jpa.properties.hibernate.dialect"));
 				em.setJpaPropertyMap(properties);
 				return em;
